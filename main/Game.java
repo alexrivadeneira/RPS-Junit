@@ -1,5 +1,7 @@
 package com.company.main;
 import com.company.main.Player;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -15,7 +17,9 @@ public class Game {
     }
 
     public void newGame(){
-        System.out.println("Starting new game");
+        System.out.println("MAIN MENU");
+        System.out.println("==========");
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("How many players? (enter 1 or 2)");
         String numPlayers = scanner.nextLine();
@@ -66,10 +70,10 @@ public class Game {
             Player winner = determineWinner(player1, player2);
 
             if(winner != null) {
-                System.out.println(winner.getName() + " has won!");
+                System.out.println(winner.getName().toUpperCase() + " has won!");
                 won = true;
             } else {
-                System.out.println("it's a tie! Play again!");
+                System.out.println("It's a tie! Play again!");
             }
         }
 
@@ -99,7 +103,7 @@ public class Game {
             Player winner = determineWinner(player1, player2);
 
             if(winner != null) {
-                System.out.println(winner.getName() + " has won!");
+                System.out.println(winner.getName().toUpperCase() + " has won!");
                 won = true;
             } else {
                 System.out.println("it's a tie! Play again!");
@@ -152,11 +156,17 @@ public class Game {
         String input = "";
 
         while(validInput == false){
-            System.out.println(player.getName() + ": Enter rock, paper or scissor");
-            input = scanner.nextLine().toLowerCase();
-            if(input.equals("rock") || input.equals("scissor") || input.equals("paper")){
-                validInput = true;
+            System.out.println(player.getName().toUpperCase() + ": Enter rock, paper or scissor");
+
+            try{
+                input = scanner.nextLine().toLowerCase();
+                if(input.equals("rock") || input.equals("scissor") || input.equals("paper")){
+                    validInput = true;
+                }
+            } catch (InputMismatchException e){
+                System.out.printf("Invalid input!");
             }
+
         }
 
         return input;
