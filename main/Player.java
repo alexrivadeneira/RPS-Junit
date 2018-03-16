@@ -19,7 +19,12 @@ public class Player {
     }
 
     public void makeMove(String input){
+        System.out.println("made a move " + input);
         moves.add(input.toLowerCase());
+    }
+
+    public String getLastMove(){
+        return moves.get(moves.size() - 1);
     }
 
 

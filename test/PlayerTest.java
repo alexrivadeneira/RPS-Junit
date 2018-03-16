@@ -49,5 +49,15 @@ public class PlayerTest {
         assertEquals(testPlayer.getMoves().get(3), "rock");
     }
 
+    @Test
+    public void getLastMove_successfullyGetLastMove(){
+        testPlayer.makeMove("ROCK");
+        testPlayer.makeMove("paPeR");
+        testPlayer.makeMove("Scissor");
+        testPlayer.makeMove("roCk");
+        testPlayer.makeMove("rock");
+        assertEquals(testPlayer.getLastMove(), "rock");
+    }
+
 }
 
