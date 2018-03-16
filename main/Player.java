@@ -19,7 +19,7 @@ public class Player {
     }
 
     public void makeMove(String input){
-        System.out.println("made a move " + input);
+        System.out.println(this.name + " made a move " + input);
         moves.add(input.toLowerCase());
     }
 

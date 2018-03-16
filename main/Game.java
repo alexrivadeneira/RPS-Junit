@@ -1,6 +1,7 @@
 package com.company.main;
 import com.company.main.Player;
 import java.util.Scanner;
+import java.util.Random;
 
 import java.util.ArrayList;
 
@@ -45,27 +46,113 @@ public class Game {
     }
 
     public void singlePlayerGame(){
-        System.out.println("playing single player game!!!");
-        Player player1 = new Player("Bob");
-        player1.makeMove(getMoveInput());
+
+        boolean won = false;
+
+        System.out.println("~ * ~ * Single player game!~ * ~ * ");
+
+        System.out.println("Enter your name:");
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.nextLine();
+
+        Player player1 = new Player(name);
+        Player player2 = new Player("The computer");
+
+
+        while(won == false){
+            player1.makeMove(getMoveInput(player1));
+            player2.makeMove(this.makeComputerMove());
+
+            Player winner = determineWinner(player1, player2);
+
+            if(winner != null) {
+                System.out.println(winner.getName() + " has won!");
+                won = true;
+            } else {
+                System.out.println("it's a tie! Play again!");
+            }
+        }
 
     }
+
 
     public void twoPlayerGame(){
-        System.out.println("Two player game!");
+
+        boolean won = false;
+
+        System.out.println("~ * ~ * Two player game!~ * ~ * ");
+
+        System.out.println("Enter player one's name:");
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.nextLine();
+        Player player1 = new Player(name);
+
+        System.out.println("Enter player two's name:");
+        String player2name = scanner.nextLine();
+        Player player2 = new Player(player2name);
+
+
+        while(won == false){
+            player1.makeMove(getMoveInput(player1));
+            player2.makeMove(getMoveInput(player2));
+
+            Player winner = determineWinner(player1, player2);
+
+            if(winner != null) {
+                System.out.println(winner.getName() + " has won!");
+                won = true;
+            } else {
+                System.out.println("it's a tie! Play again!");
+            }
+        }
     }
+
+    public Player determineWinner(Player p1, Player p2){
+        if(p1.getLastMove().equals("rock")){
+            if (p2.getLastMove().equals("paper")) {
+                return p2;
+            } else if (p2.getLastMove().equals("scissor")) {
+                return p1;
+            }
+        } else if (p1.getLastMove().equals("paper")){
+            if(p2.getLastMove().equals("rock")){
+                return p1;
+            } else if (p2.getLastMove().equals("scissor")){
+                return p2;
+            }
+        } else if (p1.getLastMove().equals("scissor")){
+            if(p2.getLastMove().equals("paper")){
+                return p1;
+            } else if (p2.getLastMove().equals("rock")){
+                return p2;
+            }
+        }
+
+        return null;
+
+    }
+
+
 
     public String makeComputerMove(){
-        return "";
+        ArrayList<String> moves = new ArrayList<>();
+        moves.add("rock");
+        moves.add("paper");
+        moves.add("scissor");
+        Random rand = new Random();
+        int randChoice = rand.nextInt(3);
+
+        return moves.get(randChoice);
+
     }
 
-    public String getMoveInput(){
+    public String getMoveInput(Player player){
         Scanner scanner = new Scanner(System.in);
         boolean validInput = false;
         String input = "";
 
         while(validInput == false){
-            System.out.println("Enter rock, paper or scissor");
+            System.out.println(player.getName() + ": Enter rock, paper or scissor");
             input = scanner.nextLine().toLowerCase();
             if(input.equals("rock") || input.equals("scissor") || input.equals("paper")){
                 validInput = true;
